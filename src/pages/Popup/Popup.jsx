@@ -1,22 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import logo from '../../assets/img/logo.svg';
-import Greetings from '../../containers/Greetings/Greetings';
+import React from 'react';
 import './Popup.css';
 
 const Popup = () => {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const url = tabs[0].url;
       if (url.includes('linkedin.com')) {
         setActive(true);
       }
     });
+    console.log('testing');
   }, []);
+
   return (
-    <div className="App">
-      <button disabled={!active}>My Button</button>
+    <div className="App center">
+      <div>
+        <button
+          className={`my-button ${active ? 'active' : 'disabled'}`}
+          disabled={!active}
+        >
+          My Button
+        </button>
+        <p>Button is {active ? 'active' : 'disabled'}</p>
+      </div>
     </div>
   );
 };
